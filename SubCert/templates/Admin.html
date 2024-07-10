@@ -1,0 +1,99 @@
+{% load static %}
+
+<!-- Admin Page -->
+<link rel="stylesheet" href="{% static 'Admin.css' %}">
+<div class="container">
+    <h1>Admin Dashboard</h1>
+    {% csrf_token %}
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search by name">
+        <input type="button" id="search-button" value="Search">
+    </div>
+    <div class="request-list">
+        <h2>Company Requests</h2>
+        <ul id="request-list">
+            {% for request in requests %}
+                <li>
+                    <a href="#" class="view-details-link" data-request-id="{{ request.id }}">Confirm Details</a>
+                    <p>Company Name: {{ request.company_name }}</p>
+                    <p>Email: {{ request.email }}</p>
+                    <p>Contact: {{ request.contact }}</p>
+                    <p>Location: {{ request.location }}</p>
+                    <p>Post Office: {{ request.post_office }}</p>
+                </li>
+            {% empty %}
+                <li>No requests found</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Modal for request details -->
+    <div class="modal" id="request-modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Confirm Details</h2>
+            <p id="company-name"></p>
+            <p id="email"></p>
+            <p id="contact"></p>
+            <p id="location"></p>
+            <p id="post-office"></p>
+            <button id="confirm-button">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<!-- Include jQuery from CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Show modal with details
+        $('.view-details-link').on('click', function(e) {
+            e.preventDefault();
+            var requestId = $(this).data('request-id');
+            $.ajax({
+                type: 'GET',
+                url: '{% url "myAdmin" %}',
+                data: {request_id: requestId},
+                success: function(data) {
+                    $('#company-name').text(data.company_name);
+                    $('#email').text(data.email);
+                    $('#contact').text(data.contact);
+                    $('#location').text(data.location);
+                    $('#post-office').text(data.post_office);
+                    $('#request-modal').show();
+                }
+            });
+        });
+
+        // Close modal
+        $('.close-button').on('click', function() {
+            $('#request-modal').hide();
+        });
+
+        // Confirm button action
+        $('#confirm-button').on('click', function() {
+            var requestId = $('#request-modal .modal-content').data('request-id');
+            $.ajax({
+                type: 'POST',
+                url: '{% url "confirm_request" %}',
+                data: {
+                    request_id: requestId,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(data) {
+                    $('#request-modal').hide();
+                    alert('Request confirmed! Email sent to ' + $('#email').text());
+                }
+            });
+        });
+
+        // Search functionality
+        $('#search-button').on('click', function() {
+            var searchTerm = $('#search-input').val().toLowerCase();
+            $('ul#request-list li').filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(searchTerm) > -1);
+            });
+        });
+    });
+</script>

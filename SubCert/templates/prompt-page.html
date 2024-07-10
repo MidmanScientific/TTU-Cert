@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Request Confirmation</title>
+    <link rel="stylesheet" href="{% static 'prompt_page.css' %}">
+</head>
+<body>
+    <div class="container">
+        {% if request_confirmed %}
+            <h2>Your request has been confirmed!</h2>
+            <p>Your username is: <span id="username">{{ username }}</span></p>
+            <p>Your password is: <span id="password">{{ password }}</span></p>
+            <button id="login-button">Proceed to Login</button>
+        {% else %}
+            <h2>Please wait...</h2>
+            <p>Your request is under review. Do not close this page.</p>
+        {% endif %}
+    </div>
+
+    <script>
+       $(document).ready(function() {
+    var requestId = new URLSearchParams(window.location.search).get('request_id');
+    if (requestId) {
+        $.ajax({
+            type: 'GET',
+            url: '{% url "prompt_page" %}', // Make sure this is the correct URL
+            data: { request_id: requestId },
+            success: function(data) {
+                if (data.confirmed) {
+                    $('#username').text(data.username);
+                    $('#password').text(data.password);
+                    $('#login-button').show();
+                } else {
+                    $('#username').hide();
+                    $('#password').hide();
+                    $('#login-button').hide();
+                }
+            }
+        });
+    }
+
+    // Login button action
+    $('#login-button').on('click', function() {
+        window.location.href = '{% url "login" %}';
+    });
+});
+    </script>
+</body>
+</html>
