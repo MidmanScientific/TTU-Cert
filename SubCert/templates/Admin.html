@@ -50,18 +50,25 @@
         // Show modal with details
         $('.view-details-link').on('click', function(e) {
             e.preventDefault();
-            var requestId = $(this).data('request-id');
+            var requestId = $(this).data('request-id'); // Get the request ID from the clicked link
             $.ajax({
                 type: 'GET',
-                url: '{% url "myAdmin" %}',
-                data: {request_id: requestId},
+                url: '{% url "myAdmin" %}', // Replace with the correct URL to fetch request details
+                data: { request_id: requestId }, // Send the request ID to the server
                 success: function(data) {
+                    // Update the modal with the fetched details
                     $('#company-name').text(data.company_name);
                     $('#email').text(data.email);
                     $('#contact').text(data.contact);
                     $('#location').text(data.location);
                     $('#post-office').text(data.post_office);
+                    // Store the request ID in the modal content for later use
+                    $('#request-modal .modal-content').data('request-id', requestId);
+                    // Show the modal
                     $('#request-modal').show();
+                },
+                error: function() {
+                    alert('Error fetching request details.');
                 }
             });
         });
@@ -73,10 +80,10 @@
 
         // Confirm button action
         $('#confirm-button').on('click', function() {
-            var requestId = $('#request-modal .modal-content').data('request-id');
+            var requestId = $('#request-modal .modal-content').data('request-id'); // Retrieve the request ID from the modal content
             $.ajax({
                 type: 'POST',
-                url: '{% url "confirm_request" %}',
+                url: '{% url "confirm_request" %}', // Replace with the correct URL to confirm the request
                 data: {
                     request_id: requestId,
                     csrfmiddlewaretoken: '{{ csrf_token }}'
@@ -84,6 +91,9 @@
                 success: function(data) {
                     $('#request-modal').hide();
                     alert('Request confirmed! Email sent to ' + $('#email').text());
+                },
+                error: function() {
+                    alert('Error confirming the request.');
                 }
             });
         });
