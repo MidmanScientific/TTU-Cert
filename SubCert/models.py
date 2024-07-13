@@ -23,3 +23,4 @@ class AutomaticLogin (models.Model):
     Password = models.CharField(max_length=100)
     
     
+   

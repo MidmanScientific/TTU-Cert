@@ -33,9 +33,7 @@ def registration(request):
     return render(request, 'registration.html')
 
 # View to display the admin dashboard
-def myAdmin(request):
-    requests = CompanyRequest.objects.all()
-    return render(request, 'Admin.html', {'requests': requests})
+
 
 # View to handle AJAX request for viewing request details
 @csrf_exempt
@@ -89,6 +87,10 @@ def prompt_page(request):
                 'password': login_credentials.Password
             })
     return render(request, 'prompt-page.html', {'request_confirmed': False})
+
+def myAdmin(request):
+    requests = CompanyRequest.objects.all()
+    return render(request, 'Admin.html', {'requests': requests})
 
 def Admin_login(request):
     if request.method=='POST':
