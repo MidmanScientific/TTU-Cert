@@ -52,12 +52,30 @@ def view_request_details(request):
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
 # View to handle confirmation of a company request
-@csrf_exempt
+from urllib.parse import urlencode
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect, JsonResponse
+from django.urls import reverse
+import random, string
+from .models import CompanyRequest, AutomaticLogin
+
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect, JsonResponse
+from django.urls import reverse
+import random, string
+from .models import CompanyRequest, AutomaticLogin
+
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect, JsonResponse
+from django.urls import reverse
+import random, string
+from .models import CompanyRequest, AutomaticLogin
+
 def confirm_request(request):
     if request.method == 'POST':
         request_id = request.POST.get('request_id')
         if request_id:
-            request_details = CompanyRequest.objects.get(id=request_id)
+            request_details = get_object_or_404(CompanyRequest, id=request_id)
             # Generate automatic login credentials
             username = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
             password = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
@@ -69,24 +87,35 @@ def confirm_request(request):
             # Update the request status
             request_details.status = 'confirmed'
             request_details.save()
-            # Redirect to the prompt page with the request ID
-            return HttpResponseRedirect(reverse('prompt_page') + '?request_id=' + request_id)
+            # Store credentials in session
+            request.session['username'] = username
+            request.session['password'] = password
+            request.session['request_id'] = request_id
+            # Redirect to the prompt page
+            return HttpResponseRedirect(reverse('prompt_page'))
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
-# View to display the prompt page
 def prompt_page(request):
-    request_id = request.GET.get('request_id')
+    request_id = request.session.get('request_id')
+    context = {
+        'request_id': request_id,
+    }
+    return render(request, 'prompt-page.html', context)
+
+def check_request_status(request):
+    request_id = request.session.get('request_id')
     if request_id:
-        request_details = CompanyRequest.objects.get(id=request_id)
+        request_details = get_object_or_404(CompanyRequest, id=request_id)
         if request_details.status == 'confirmed':
-            # Retrieve the login credentials
-            login_credentials = AutomaticLogin.objects.last()
-            return render(request, 'prompt-page.html', {
+            username = request.session.pop('username', None)
+            password = request.session.pop('password', None)
+            return JsonResponse({
                 'request_confirmed': True,
-                'username': login_credentials.Username,
-                'password': login_credentials.Password
+                'username': username,
+                'password': password
             })
-    return render(request, 'prompt-page.html', {'request_confirmed': False})
+    return JsonResponse({'request_confirmed': False})
+
 
 def myAdmin(request):
     requests = CompanyRequest.objects.all()
@@ -108,4 +137,5 @@ def Admin_login(request):
 
 
 def login (request):
+    
     return render(request,'login.html')

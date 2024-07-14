@@ -4,47 +4,59 @@
 <head>
     <title>Request Confirmation</title>
     <link rel="stylesheet" href="{% static 'prompt_page.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="container">
-        {% if request_confirmed %}
-            <h2>Your request has been confirmed!</h2>
-            <p>Your username is: <span id="username">{{ username }}</span></p>
-            <p>Your password is: <span id="password">{{ password }}</span></p>
-            <button id="login-button">Proceed to Login</button>
-        {% else %}
+        <div id="waiting-message">
             <h2>Please wait...</h2>
             <p>Your request is under review. Do not close this page.</p>
-        {% endif %}
+            <button id="refresh-button">Refresh Status</button>
+        </div>
+        <div id="status-message" style="display: none;">
+            <p id="status-text">Not confirmed yet, please hold on while admin confirms.</p>
+        </div>
+        <div id="confirmation-message" style="display: none;">
+            <h2>LOGIN DETAILS</h2>
+            <H4>Your credentials are seen only when admin approves</H4>
+            <p>Your username is: <span id="username"></span></p>
+            <p>Your password is: <span id="password"></span></p>
+            <button id="login-button">Proceed to Login</button>
+        </div>
     </div>
 
     <script>
        $(document).ready(function() {
-    var requestId = new URLSearchParams(window.location.search).get('request_id');
-    if (requestId) {
-        $.ajax({
-            type: 'GET',
-            url: '{% url "prompt_page" %}', // Make sure this is the correct URL
-            data: { request_id: requestId },
-            success: function(data) {
-                if (data.confirmed) {
-                    $('#username').text(data.username);
-                    $('#password').text(data.password);
-                    $('#login-button').show();
-                } else {
-                    $('#username').hide();
-                    $('#password').hide();
-                    $('#login-button').hide();
-                }
+            function checkStatus() {
+                $.ajax({
+                    url: '{% url "check_request_status" %}',
+                    method: 'GET',
+                    success: function(data) {
+                        if (data.request_confirmed) {
+                            $('#waiting-message').hide();
+                            $('#status-message').hide();
+                            $('#username').text(data.username);
+                            $('#password').text(data.password);
+                            $('#confirmation-message').show();
+                        } else {
+                            $('#waiting-message').hide();
+                            $('#confirmation-message').hide();
+                            $('#status-message').show();
+                        }
+                    }
+                });
             }
-        });
-    }
 
-    // Login button action
-    $('#login-button').on('click', function() {
-        window.location.href = '{% url "login" %}';
-    });
-});
+            // Manual refresh button action
+            $('#refresh-button').on('click', function() {
+                checkStatus();
+            });
+
+            // Login button action
+            $('#login-button').on('click', function() {
+                window.location.href = '{% url "login" %}';
+            });
+       });
     </script>
 </body>
 </html>
