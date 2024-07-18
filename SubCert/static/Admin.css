@@ -1,13 +1,14 @@
 /* Admin.css */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Kanit', sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f4f4f4;
 }
 
 .container {
-  width: 80%;
+  width: 90%;
+  max-width: 1200px;
   margin: 20px auto;
   background: #fff;
   padding: 20px;
@@ -57,7 +58,8 @@ h1 {
   background-color: #fff;
   margin: 15% auto;
   padding: 20px;
-  width: 30%;
+  width: 90%;
+  max-width: 600px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 
@@ -89,10 +91,10 @@ h1 {
   background-color: #0056b3;
 }
 
-h2{
-
-  color:#007bff;
+h2 {
+  color: #007bff;
 }
+
 /* Search Button Styles */
 .search-container {
   margin-bottom: 20px;
@@ -100,7 +102,8 @@ h2{
 
 .search-container input[type="text"] {
   padding: 10px;
-  width: 200px;
+  width: 70%;
+  max-width: 400px;
   border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
@@ -117,4 +120,36 @@ h2{
 
 .search-container input[type="button"]:hover {
   background-color: #0056b3;
+}
+
+.myDesh {
+  font-style: italic;
+  padding: 0;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .container {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .modal-content {
+    margin: 25% auto;
+    width: 95%;
+  }
+
+  .search-container input[type="text"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .search-container input[type="button"] {
+    width: 100%;
+  }
+
+  #confirm-button {
+    width: 100%;
+    padding: 15px;
+  }
 }

@@ -58,7 +58,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 import random, string
 from .models import CompanyRequest, AutomaticLogin
-
+from .models import myVerification
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
@@ -137,5 +137,33 @@ def Admin_login(request):
 
 
 def login (request):
+    if request.method=='POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        if AutomaticLogin.objects.filter(Username=username,Password=password).exists():
+            return redirect('verification')
+        else:
+            failed_message='Incorrect username or password'
+            return render(request,'login.html',{'failed_message':failed_message})
     
     return render(request,'login.html')
+
+
+
+def verification(request):
+    if request.method == 'POST':
+        unique_number = request.POST['unique_number']
+        try:
+            details = myVerification.objects.get(unique_number=unique_number)
+            return render(request, 'result.html', {'details': details})
+        except myVerification.DoesNotExist:
+            # Pass an error message to the template if the unique number is not found
+            return render(request, 'result.html', {'error_message': 'Result not found'})
+    return render(request, 'verification.html')
+
+def result (request):
+    return render (request,'result.html')
+
+def homepage(request):
+    return render(request,'homepage.html')

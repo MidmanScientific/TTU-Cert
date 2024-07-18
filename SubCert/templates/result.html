@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verification Result</title>
+    <link rel="stylesheet" href="{% static 'result.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+<header>
+    <div class="navbar">
+        <div class="menu-toggle" id="menu-toggle">
+            &#9776;
+        </div>
+        <nav id="nav">
+            <ul>
+                <li><a href="{% url 'homepage' %}">Home</a></li>
+                <li><a href="{% url 'registration' %}">Register</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+            </ul>
+        </nav>
+    </div>
+
+</header>
+    <div class="container">
+        {% if details %}
+            <div id="letter-content" class="letter-body">
+                <h1 class="heading">Verification of Academic Records</h1>
+                <p>Dear Sir/Madam,</p>
+                <p>We hereby verify the academic records of the student as follows:</p>
+                <p><strong>Unique Number:</strong> {{ details.unique_number }}</p>
+                <p><strong>Student Name:</strong> {{ details.student_name }}</p>
+                <p><strong>Course:</strong> {{ details.course }}</p>
+                <p><strong>Department:</strong> {{ details.department }}</p>
+                <p><strong>Starting Year:</strong> {{ details.starting_year }}</p>
+                <p><strong>Ending Year:</strong> {{ details.ending_year }}</p>
+                <p><strong>Divisions:</strong> {{ details.divisions }}</p>
+                <p><strong>CGPA:</strong> {{ details.cgpa }}</p>
+                <p><strong>Number of Trials:</strong> {{ details.number_of_trails }}</p>
+                <p>Thank you.</p>
+                <p>Sincerely,</p>
+                <p>Takoradi Technical University</p>
+            </div>
+            <div class="button-container">
+                <div class="button-bg">
+                    <button type="button" class="print-button" onclick="window.print()">PRINT</button>
+                    <button type="button" class="download-button" id="download-button">DOWNLOAD</button>
+                </div>
+            </div>
+        {% elif error_message %}
+            <h1 class="error-message">{{ error_message }}</h1>
+            <img src="data:image/jpeg;base64,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" alt="">
+        {% endif %}
+    </div>
+    
+    <script>
+        document.getElementById('download-button').addEventListener('click', function () {
+            const { jsPDF } = window.jspdf;
+            const letterContent = document.getElementById('letter-content');
+
+            html2canvas(letterContent).then((canvas) => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'pt',
+                    format: 'a4'
+                });
+
+                const imgProps = pdf.getImageProperties(imgData);
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                pdf.save('verification_letter.pdf');
+            });
+        });
+
+        document.getElementById('download-button').addEventListener('click', function () {
+            const letterContent = document.getElementById('letter-content');
+
+            html2canvas(letterContent).then((canvas) => {
+                const imgData = canvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.href = imgData;
+                link.download = 'verification_letter.png';
+                link.click();
+            });
+        });
+    </script>
+</body>
+</html>

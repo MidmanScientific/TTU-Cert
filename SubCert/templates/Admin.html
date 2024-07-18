@@ -1,114 +1,127 @@
-{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'Admin.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="myDesh">WELCOME TO </h1><h1>Admin Dashboard</h1>
+        {% csrf_token %}
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Search by name">
+            <input type="button" id="search-button" value="Search">
+        </div>
+        <div class="request-list">
+            <h2>Company Requests</h2>
+            <ul id="request-list">
+                {% for request in requests %}
+                    <li>
+                        <div>
+                            <p><strong>Company Name:</strong> {{ request.company_name }}</p>
+                            <p><strong>Email:</strong> {{ request.email }}</p>
+                            <p><strong>Contact:</strong> {{ request.contact }}</p>
+                            <p><strong>Location:</strong> {{ request.location }}</p>
+                            <p><strong>Post Office:</strong> {{ request.post_office }}</p>
+                        </div>
+                        <a href="#" class="view-details-link" data-request-id="{{ request.id }}">Confirm Detail</a>
+                    </li>
+                {% empty %}
+                    <li>No requests found</li>
+                {% endfor %}
+            </ul>
+        </div>
 
-<!-- Admin Page -->
-<link rel="stylesheet" href="{% static 'Admin.css' %}">
-<div class="container">
-    <h1>Admin Dashboard</h1>
-    {% csrf_token %}
-    <div class="search-container">
-        <input type="text" id="search-input" placeholder="Search by name">
-        <input type="button" id="search-button" value="Search">
-    </div>
-    <div class="request-list">
-        <h2>Company Requests</h2>
-        <ul id="request-list">
-            {% for request in requests %}
-                <li>
-                    <a href="#" class="view-details-link" data-request-id="{{ request.id }}">Confirm Detail</a>
-                    <p>Company Name: {{ request.company_name }}</p>
-                    <p>Email: {{ request.email }}</p>
-                    <p>Contact: {{ request.contact }}</p>
-                    <p>Location: {{ request.location }}</p>
-                    <p>Post Office: {{ request.post_office }}</p>
-                </li>
-            {% empty %}
-                <li>No requests found</li>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <!-- Modal for request details -->
-    <div class="modal" id="request-modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>Confirm Details</h2>
-            <form id="confirm-form">
-                <input type="hidden" id="request-id" name="request_id">
-                <label for="company-name">Company Name:</label>
-                <p id="company-name"></p>
-                <label for="email">Email:</label>
-                <p id="email"></p>
-                <label for="contact">Contact:</label>
-                <p id="contact"></p>
-                <label for="location">Location:</label>
-                <p id="location"></p>
-                <label for="post-office">Post Office:</label>
-                <p id="post-office"></p>
-                <button type="submit" id="confirm-button">Confirm</button>
-            </form>
+        <!-- Modal for request details -->
+        <div class="modal" id="request-modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>Confirm Details</h2>
+                <form id="confirm-form">
+                    <input type="hidden" id="request-id" name="request_id">
+                    <label for="company-name">Company Name:</label>
+                    <p id="company-name"></p>
+                    <label for="email">Email:</label>
+                    <p id="email"></p>
+                    <label for="contact">Contact:</label>
+                    <p id="contact"></p>
+                    <label for="location">Location:</label>
+                    <p id="location"></p>
+                    <label for="post-office">Post Office:</label>
+                    <p id="post-office"></p>
+                    <button type="submit" id="confirm-button">Confirm</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Include jQuery from CDN -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Include jQuery from CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<script>
-    $(document).ready(function() {
-        // Show modal with details
-        $('.view-details-link').on('click', function(e) {
-            e.preventDefault();
-            var requestId = $(this).data('request-id');
-            $.ajax({
-                type: 'GET',
-                url: '{% url "myAdmin" %}',
-                data: {request_id: requestId},
-                success: function(data) {
-                    console.log('Received data:', data); // Log the received data
-                    $('#company-name').text(data.company_name);
-                    $('#email').text(data.email);
-                    $('#contact').text(data.contact);
-                    $('#location').text(data.location);
-                    $('#post-office').text(data.post_office);
-                    $('#request-id').val(requestId); // Set the request ID in the hidden input
-                    $('#request-modal').show();
-                },
-                error: function(xhr, status, error) {
-                    console.error('AJAX Error:', error);
-                    console.log('Response:', xhr.responseText);
-                }
+    <script>
+        $(document).ready(function() {
+            // Show modal with details
+            $('.view-details-link').on('click', function(e) {
+                e.preventDefault();
+                var requestId = $(this).data('request-id');
+                $.ajax({
+                    type: 'GET',
+                    url: '{% url "myAdmin" %}',
+                    data: {request_id: requestId},
+                    success: function(data) {
+                        console.log('Received data:', data); // Log the received data
+                        $('#company-name').text(data.company_name);
+                        $('#email').text(data.email);
+                        $('#contact').text(data.contact);
+                        $('#location').text(data.location);
+                        $('#post-office').text(data.post_office);
+                        $('#request-id').val(requestId); // Set the request ID in the hidden input
+                        $('#request-modal').show();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error:', error);
+                        console.log('Response:', xhr.responseText);
+                    }
+                });
+            });
+
+            // Close modal
+            $('.close-button').on('click', function() {
+                $('#request-modal').hide();
+            });
+
+            // Confirm form submission
+            $('#confirm-form').on('submit', function(e) {
+                e.preventDefault();
+                var requestId = $('#request-id').val();
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "confirm_request" %}',
+                    data: {
+                        request_id: requestId,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(data) {
+                        $('#request-modal').hide();
+                        location.reload(); // Reload the page to show the updated list
+                    }
+                });
+            });
+
+            // Search functionality
+            $('#search-button').on('click', function() {
+                var searchTerm = $('#search-input').val().toLowerCase();
+                $('ul#request-list li').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(searchTerm) > -1);
+                });
             });
         });
-
-        // Close modal
-        $('.close-button').on('click', function() {
-            $('#request-modal').hide();
-        });
-
-        // Confirm form submission
-        $('#confirm-form').on('submit', function(e) {
-            e.preventDefault();
-            var requestId = $('#request-id').val();
-            $.ajax({
-                type: 'POST',
-                url: '{% url "confirm_request" %}',
-                data: {
-                    request_id: requestId,
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
-                },
-                success: function(data) {
-                    $('#request-modal').hide();
-                    
-                }
-            });
-        });
-
-        // Search functionality
-        $('#search-button').on('click', function() {
-            var searchTerm = $('#search-input').val().toLowerCase();
-            $('ul#request-list li').filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(searchTerm) > -1);
-            });
-        });
-    });
-</script>
+    </script>
+</body>
+</html>
