@@ -11,17 +11,23 @@
 </head>
 <body>
   <header>
+    <div clas="myData">
     <div class="navbar">
       <div class="menu-toggle" id="menu-toggle">
         &#9776;
       </div>
+      <img class="image" src="https://th.bing.com/th/id/R.f9fb58f37d71a5386339a8a62685c603?rik=MK6SR9OYwyrKYA&pid=ImgRaw&r=0" alt="">
+      
       <nav id="nav">
+        
         <ul>
           <li><a href="{% url 'homepage' %}">Home</a></li>
           <li><a href="{% url 'registration' %}">Register</a></li>
           <li><a href="{% url 'login' %}">Login</a></li>
+          <li><a href="{% url 'Admin_login' %}">Admin</a></li>
         </ul>
       </nav>
+    </div>
     </div>
   </header>
   <main>
@@ -29,7 +35,7 @@
       <div class="hero-content">
         <h2>Welcome to the Takoradi Technical University Certificate Verification System</h2>
         <h3>Ensuring Authenticity and Trust in Education.</h3> <br>
-        <a href="{% url 'registration' %}"><button>START TO VERIFY</button></a>
+        <a href="{% url 'registration' %}"><button class="btn-donate">START TO VERIFY</button></a>
       </div>
     </div>
   </main>

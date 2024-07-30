@@ -4,20 +4,78 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f4f4f4;
+  
+}
+
+p{
+  font-weight: 350;
+  color: rgba(0, 0, 0, 0.564);
+}
+.sidenav {
+  height: 85%;
+  width: 200px;
+  margin-top: 3.5%;
+  margin-left: 3.5%;
+  margin-bottom: 0.1%;
+  position:fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+ 
+  overflow-x:hidden;
+  transition: 0.5s;
+  padding-top: 20px;
+  border-radius: 20px;
+  background: #f4f4f4;
+  box-shadow: 0 0 55px rgba(40, 45, 59, 0.375);;
+}
+
+.sidenav a {
+  padding: 16px 8px 16px 16px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #2d3cacc4;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a i {
+  margin-right: 10px;
+}
+
+.sidenav a:hover {
+  color: #7a7373;
+}
+
+.main {
+  margin-left: 250px;
+  padding: 16px;
+  transition: margin-left 0.5s;
 }
 
 .container {
   width: 90%;
   max-width: 1200px;
   margin: 20px auto;
-  background: #fff;
+  background: #f4f4f4;
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 55px rgba(52, 54, 60, 0.375);
+  border-radius: 20px;
+}
+ .image{
+  width:80px;
+  height:80px;
+ margin-left:45%;
+  padding:0;
+  margin-top: 1%;
 }
 
 h1 {
   color: #2d3cacc4;
+  display:flex;
+  justify-content: center;
 }
+
 
 .request-list {
   margin-top: 20px;
@@ -129,6 +187,21 @@ h2 {
 }
 
 @media (max-width: 600px) {
+  .sidenav {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidenav a {
+    float: left;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+  }
+  .main {
+    margin-left: 0;
+  }
+  
   .container {
     width: 95%;
     padding: 10px;

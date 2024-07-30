@@ -10,7 +10,7 @@
 
 header {
     width: 100%;
-    background: #fff;
+    background: #ffffffb7;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
@@ -45,11 +45,6 @@ nav ul li {
     margin-right: 1rem;
 }
 
-nav ul li a {
-    text-decoration: none;
-    color: #333;
-    font-weight: 400;
-}
 
 nav ul li a:hover {
     color: #f0a500;
@@ -59,16 +54,49 @@ nav ul li a:hover {
 body {
     font-family: 'Kanit', sans-serif;
     background-color: #f7f7f7;
-    background-color:#007bff43
+    background: url('https://cdn.pixelbin.io/v2/lucky-mud-7af2d3/wm.remove()/__editor/2024-07-29/stock-photo-face-student-portrait-and-black-woman-in-university-ready-for-learning-goals-or-targets-2248535229.jpg?download=true') no-repeat center/cover;
     
 }
 
+.navbar {
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    padding: 0rem 0rem;
+    margin-right:120px;
+    
+}
+
+nav ul li {
+    margin-right: 0.5rem;
+}
+
+nav ul li a {
+    text-decoration: none;
+    font-weight: 200;
+   display:flex;
+   justify-content: center;
+   color: rgba(0, 0, 0, 0.774);
+    font-weight: 400;
+}
+
+nav ul li a:hover {
+    color: #f0a500;
+}
+
+.image{
+    width:40px;
+    height:40px;
+    margin-right:60%;
+    margin-left: 3%;
+    padding:0;
+}
 .container {
     max-width: 400px;
     margin: 40px auto;
     margin-top: 10%;
     padding: 20px;
-    background-color: #fff;
+    background-color: #ffffffac;
     border: 1px solid #ddd;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }

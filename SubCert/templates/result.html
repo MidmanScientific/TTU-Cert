@@ -11,24 +11,30 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
-<header>
-    <div class="navbar">
-        <div class="menu-toggle" id="menu-toggle">
+    <header>
+        <div class="navbar">
+          <div class="menu-toggle" id="menu-toggle">
             &#9776;
-        </div>
-        <nav id="nav">
+          </div>
+          <img class="image" src="https://th.bing.com/th/id/R.f9fb58f37d71a5386339a8a62685c603?rik=MK6SR9OYwyrKYA&pid=ImgRaw&r=0" alt="">
+          
+          <nav id="nav">
+            
             <ul>
-                <li><a href="{% url 'homepage' %}">Home</a></li>
-                <li><a href="{% url 'registration' %}">Register</a></li>
-                <li><a href="{% url 'login' %}">Login</a></li>
+              <li><a href="{% url 'homepage' %}">Home</a></li>
+              <li><a href="{% url 'registration' %}">Register</a></li>
+              <li><a href="{% url 'login' %}">Login</a></li>
+              <li><a href="{% url 'Admin_login' %}">Admin</a></li>
             </ul>
-        </nav>
-    </div>
-
+          </nav>
+        </div>
+      </header>
 </header>
     <div class="container">
         {% if details %}
+        <img  class="final" src="https://th.bing.com/th/id/R.f9fb58f37d71a5386339a8a62685c603?rik=MK6SR9OYwyrKYA&pid=ImgRaw&r=0" alt="">
             <div id="letter-content" class="letter-body">
+                <h1 class="headme">TAKORADI TECHNICAL UNIVERSITY</h1>
                 <h1 class="heading">Verification of Academic Records</h1>
                 <p>Dear Sir/Madam,</p>
                 <p>We hereby verify the academic records of the student as follows:</p>
@@ -40,7 +46,7 @@
                 <p><strong>Ending Year:</strong> {{ details.ending_year }}</p>
                 <p><strong>Divisions:</strong> {{ details.divisions }}</p>
                 <p><strong>CGPA:</strong> {{ details.cgpa }}</p>
-                <p><strong>Number of Trials:</strong> {{ details.number_of_trails }}</p>
+                <br>
                 <p>Thank you.</p>
                 <p>Sincerely,</p>
                 <p>Takoradi Technical University</p>
@@ -48,7 +54,7 @@
             <div class="button-container">
                 <div class="button-bg">
                     <button type="button" class="print-button" onclick="window.print()">PRINT</button>
-                    <button type="button" class="download-button" id="download-button">DOWNLOAD</button>
+                    <button type="button" class="download-button" id="download-button">TO IMG</button>
                 </div>
             </div>
         {% elif error_message %}

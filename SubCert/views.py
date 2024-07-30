@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from .models import CompanyRequest, AutomaticLogin
 import random, string
+from django.contrib.auth.models import User,auth
 
 # View to handle company registration
 def registration(request):
@@ -71,28 +72,68 @@ from django.urls import reverse
 import random, string
 from .models import CompanyRequest, AutomaticLogin
 
+from django.core.mail import send_mail
+from django.http import JsonResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
+from .models import CompanyRequest, AutomaticLogin
+import random
+import string
+
+from django.core.mail import send_mail
+from django.http import JsonResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.urls import reverse
+from .models import CompanyRequest, AutomaticLogin
+import random
+import string
+
 def confirm_request(request):
     if request.method == 'POST':
         request_id = request.POST.get('request_id')
         if request_id:
             request_details = get_object_or_404(CompanyRequest, id=request_id)
+            
             # Generate automatic login credentials
-            username = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
-            password = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
+            username = ''.join(random.choices(string.ascii_letters, k=4))
+            password = ''.join(random.choices(string.digits, k=4))
+            
             # Save the login credentials
             AutomaticLogin.objects.create(
                 Username=username,
                 Password=password
             )
+            
             # Update the request status
             request_details.status = 'confirmed'
             request_details.save()
+
             # Store credentials in session
             request.session['username'] = username
             request.session['password'] = password
             request.session['request_id'] = request_id
+
+            # Send email with login credentials
+            subject = 'Your Login Credentials'
+            message = f"""Dear {request_details.company_name},
+
+Your request has been confirmed. Here are your login credentials:
+
+Username: {username}
+Password: {password}
+
+You can log in at the following link:
+http://princedanmarnuel.pythonanywhere.com/login
+
+Thank you,
+Admin Team
+"""
+            recipient_list = [request_details.email]
+            send_mail(subject, message, 'marnuel19clerk@gmail.com', recipient_list)
+
             # Redirect to the prompt page
             return HttpResponseRedirect(reverse('prompt_page'))
+
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
 def prompt_page(request):

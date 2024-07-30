@@ -10,24 +10,11 @@ body {
   font-size: 16px;
   line-height: 1.5;
   color: #333;
-  background-color: #007bff43;
+  background: url('https://cdn.pixelbin.io/v2/lucky-mud-7af2d3/wm.remove()/__editor/2024-07-29/stock-photo-face-student-portrait-and-black-woman-in-university-ready-for-learning-goals-or-targets-2248535229.jpg?download=true')no-repeat center;
 }
 
-header {
-  width: 100%;
-  background: #fff;
-  box-shadow: 0 2px 4px rgba(24, 23, 23, 0.194);
-  position: fixed;
-  top: 0;
-  z-index: 1000;
-}
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1rem;
-}
+
 
 .menu-toggle {
   display: none;
@@ -35,30 +22,12 @@ header {
   cursor: pointer;
 }
 
-nav {
-  display: flex;
-}
 
-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-}
 
-nav ul li {
-  margin-right: 1rem;
-}
 
-nav ul li a {
-  text-decoration: none;
-  color: #333;
-  font-weight: 400;
-}
 
-nav ul li a:hover {
-  color: #f0a500;
-}
+
+
 
 h1 {
   font-size: 15px;
@@ -68,14 +37,14 @@ h1 {
 }
 
 .container {
-  max-width: 600px;
-  margin: 20px auto;
-  margin-top: 10%;
-  padding: 40px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
+  max-width: 550px;
+  margin: 10px auto;
+  margin-top: 7%;
+  padding: 10px;
+  background-color: #e3d4d479;
+  border: 0px solid #dddddd86;
+  box-shadow: 0 0 15px rgba(100, 97, 97, 0.446);
+  border-radius: 0px;
 }
 
 .container h1 {
@@ -98,34 +67,58 @@ input, select {
   width: 90%;
   padding: 10px;
   margin-bottom: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #cccccca4;
   border-radius: 3px;
   font-size: 16px;
 }
 
 input[type="text"], input[type="email"], input[type="tel"] {
   height: 40px;
+  background-color: #ffffffc5;
 }
 
 select {
   height: 40px;
   padding: 10px;
+  
 }
-
-button[type="submit"] {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 20px;
+.btn-donate {
+  --clr-font-main: hsla(0 0% 20% / 100);
+  --btn-bg-1: hsla(194 100% 69% / 1);
+  --btn-bg-2: hsla(217 100% 56% / 1);
+  --btn-bg-color: hsla(360 100% 100% / 1);
+  --radii: 0.5em;
+  cursor: pointer;
+  padding: 0.9em 1.4em;
+  min-width: 120px;
+  min-height: 44px;
+  font-size: var(--size, 1rem);
+  font-family: 'Kanit', sans-serif;
+  font-weight: 500;
+  transition: 0.8s;
+  background-size: 280% auto;
+  background-image: linear-gradient(325deg, var(--btn-bg-2) 0%, var(--btn-bg-1) 55%, var(--btn-bg-2) 90%);
   border: none;
   border-radius: 0px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 300;
+  color: var(--btn-bg-color);
+  box-shadow: 0px 0px 20px rgba(64, 168, 233, 0.684), 0px 5px 5px -1px rgba(44, 102, 195, 0.444), inset 4px 4px 8px rgba(175, 230, 255, 0.5), inset -4px -4px 8px rgba(19, 95, 216, 0.35);
 }
 
-button[type="submit"]:hover {
-  background-color: #005bb5;
+.btn-donate:hover {
+  background-position: right top;
 }
+
+.btn-donate:is(:focus, :focus-visible, :active) {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--btn-bg-color), 0 0 0 6px var(--btn-bg-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-donate {
+    transition: linear;
+  }
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -198,4 +191,61 @@ button[type="submit"]:hover {
   nav ul li {
       margin-right: 1.5rem;
   }
+}
+
+header {
+  width: 100%;
+  background: #ffffffcc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.183);
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar {
+  display: flex;
+  justify-content:space-around;
+  align-items: center;
+  padding: 0rem 0rem;
+  margin-right:100px;
+}
+
+
+nav {
+  display: flex;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+.image{
+  width:40px;
+  height:40px;
+  margin-right:60%;
+  margin-left: 0.2%;
+  padding:0;
+}
+h7{
+ color:#5795d8;
+ font-size: 15px;
+}
+nav ul li {
+  margin-right: 0.5rem;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.774);
+  
+  font-weight: 400;
+ display:flex;
+ justify-content: center;
+}
+
+nav ul li a:hover {
+  color: #f0a500;
+ 
 }

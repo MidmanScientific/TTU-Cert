@@ -8,16 +8,17 @@
 
 body {
     font-family: 'Kanit', sans-serif;
-    background-color: #f7f7f7;
+    background-color:url('https://images.unsplash.com/photo-1461039088886-b5c863279a0e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=rochelle-nicole-E9uJ65vwGmE-unsplash.jpg') ;
 }
 
 .container {
     max-width: 400px;
     margin: 40px auto;
+    margin-top:10%;
     padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffffac;
+  border: 0px solid #dddddd86;
+  box-shadow: 0 0 15px rgba(100, 97, 97, 0.446);
 }
 
 /* Login Form Styles */

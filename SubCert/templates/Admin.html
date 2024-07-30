@@ -1,18 +1,30 @@
+
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    {% load static %}
+    
     <link rel="stylesheet" href="{% static 'Admin.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+  <div class="sidenav">
+    <a href="{% url 'homepage'%}"><i class="fas fa-home"></i> Home</a>
+    <a href="{% url 'registration'%}"><i class="fas fa-user-plus"></i> Register</a>
+    <a href="{% url 'login'%}"><i class="fas fa-sign-in-alt"></i> Login</a>
+    <a href="{% url 'myAdmin'%}"><i class="fas fa-user-shield"></i> Admin</a>
+  </div>
+
+  <div class="main">
     <div class="container">
-        <h1 class="myDesh">WELCOME TO </h1><h1>Admin Dashboard</h1>
+        <img class="image" src="https://th.bing.com/th/id/R.f9fb58f37d71a5386339a8a62685c603?rik=MK6SR9OYwyrKYA&pid=ImgRaw&r=0" alt="">
+        <h1>Admin Dashboard</h1>
         {% csrf_token %}
         <div class="search-container">
             <input type="text" id="search-input" placeholder="Search by name">
@@ -21,7 +33,7 @@
         <div class="request-list">
             <h2>Company Requests</h2>
             <ul id="request-list">
-                {% for request in requests %}
+                {% for request in requests reversed %}
                     <li>
                         <div>
                             <p><strong>Company Name:</strong> {{ request.company_name }}</p>
@@ -31,6 +43,7 @@
                             <p><strong>Post Office:</strong> {{ request.post_office }}</p>
                         </div>
                         <a href="#" class="view-details-link" data-request-id="{{ request.id }}">Confirm Detail</a>
+                       
                     </li>
                 {% empty %}
                     <li>No requests found</li>
@@ -45,21 +58,22 @@
                 <h2>Confirm Details</h2>
                 <form id="confirm-form">
                     <input type="hidden" id="request-id" name="request_id">
-                    <label for="company-name">Company Name:</label>
-                    <p id="company-name"></p>
-                    <label for="email">Email:</label>
-                    <p id="email"></p>
-                    <label for="contact">Contact:</label>
-                    <p id="contact"></p>
-                    <label for="location">Location:</label>
-                    <p id="location"></p>
-                    <label for="post-office">Post Office:</label>
-                    <p id="post-office"></p>
+                    
+                    <p id="company-name">{{ request.company_name }}</p>
+                    
+                    <p id="email">{{ request.email }}</p>
+                    
+                    <p id="contact">{{ request.contact }}</p>
+                    
+                    <p id="location">{{ request.location }}</p>
+                    
+                    <p id="post-office">{{ request.post_office }}</p>
                     <button type="submit" id="confirm-button">Confirm</button>
                 </form>
             </div>
         </div>
     </div>
+  </div>
 
     <!-- Include jQuery from CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

@@ -30,6 +30,7 @@ class myVerification(models.Model):
     divisions = models.CharField(max_length=50)
     cgpa = models.DecimalField(max_digits=5, decimal_places=2)
     number_of_trails = models.IntegerField(max_length=5)
+    
 
 
 
