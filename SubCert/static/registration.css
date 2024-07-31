@@ -37,11 +37,11 @@ h1 {
 }
 
 .container {
-  max-width: 550px;
+  max-width: 500px;
   margin: 10px auto;
   margin-top: 7%;
   padding: 10px;
-  background-color: #e3d4d479;
+  background-color: #e3d4d4ac;
   border: 0px solid #dddddd86;
   box-shadow: 0 0 15px rgba(100, 97, 97, 0.446);
   border-radius: 0px;
@@ -65,22 +65,26 @@ label {
 
 input, select {
   width: 90%;
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 6px;
+  margin-bottom: 5px;
   border: 1px solid #cccccca4;
   border-radius: 3px;
   font-size: 16px;
+  
 }
 
 input[type="text"], input[type="email"], input[type="tel"] {
   height: 40px;
   background-color: #ffffffc5;
+  margin-left: 4%;
 }
-
+label{
+  margin-left: 4%;
+}
 select {
   height: 40px;
   padding: 10px;
-  
+  margin-left: 4%;
 }
 .btn-donate {
   --clr-font-main: hsla(0 0% 20% / 100);
@@ -91,7 +95,7 @@ select {
   cursor: pointer;
   padding: 0.9em 1.4em;
   min-width: 120px;
-  min-height: 44px;
+  min-height: 40px;
   font-size: var(--size, 1rem);
   font-family: 'Kanit', sans-serif;
   font-weight: 500;
@@ -99,6 +103,7 @@ select {
   background-size: 280% auto;
   background-image: linear-gradient(325deg, var(--btn-bg-2) 0%, var(--btn-bg-1) 55%, var(--btn-bg-2) 90%);
   border: none;
+  margin-left: 4%;
   border-radius: 0px;
   color: var(--btn-bg-color);
   box-shadow: 0px 0px 20px rgba(64, 168, 233, 0.684), 0px 5px 5px -1px rgba(44, 102, 195, 0.444), inset 4px 4px 8px rgba(175, 230, 255, 0.5), inset -4px -4px 8px rgba(19, 95, 216, 0.35);

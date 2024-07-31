@@ -104,9 +104,9 @@ nav ul li a {
     color: rgba(0, 0, 0, 0.774);
     font-weight: 200;
    display:flex;
-   justify-content: center;
+   justify-content: space-evenly;
    font-weight:400;
-   justify-items:right;
+   justify-items:space-evenly;
 }
 
 nav ul li a:hover {
