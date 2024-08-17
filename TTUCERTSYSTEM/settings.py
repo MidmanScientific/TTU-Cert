@@ -140,3 +140,6 @@ EMAIL_HOST_PASSWORD = 'YVOBJaIyPFnRmE4C'
 DEFAULT_FROM_EMAIL = 'marnuel19clerk@gmail.com'
 
 
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

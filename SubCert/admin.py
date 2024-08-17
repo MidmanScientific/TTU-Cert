@@ -3,11 +3,13 @@ from .models import myData
 from .models  import CompanyRequest
 from .models  import AutomaticLogin
 from .models import myVerification
+from .models import imageUpload
 
 # Register your models here.
 admin.site.register(myData)
 admin.site.register(AutomaticLogin)
 admin.site.register(myVerification)
+admin.site.register(imageUpload)
 
 @admin.register(CompanyRequest)
 class CompanyRequestAdmin(admin.ModelAdmin):

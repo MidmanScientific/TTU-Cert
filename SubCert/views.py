@@ -8,6 +8,7 @@ from .models import CompanyRequest, AutomaticLogin
 import random, string
 from django.contrib.auth.models import User,auth
 
+
 # View to handle company registration
 def registration(request):
     if request.method == 'POST':
@@ -204,6 +205,7 @@ def verification(request):
     return render(request, 'verification.html')
 
 def result (request):
+    
     return render (request,'result.html')
 
 def homepage(request):
